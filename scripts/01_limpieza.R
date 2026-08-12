@@ -1,13 +1,16 @@
+library(here)
+
+here()
+
 library(dplyr)
 library(ggplot2)
-library(readxl)
+library(readr)
 library(stringr)
 
 # =============================================================
 # 1. Cargar datos
 # =============================================================
-dataset_graphs <- read_excel("C:/Users/GABRIEL/Downloads/dataset_graphs.xlsx")
-
+dataset_graphs <- read_csv(here("data","raw","comercio_puertos.csv"))
 # =============================================================
 # 2. Resolver destinos con formato de ruta desviada (ej. "US CRP>US PAU")
 #    El destino real es lo que está DESPUÉS de la última flecha ">"
