@@ -1,0 +1,161 @@
+\documentclass[conference]{IEEEtran}
+
+% ------------------------------------------------
+% Packages
+% ------------------------------------------------
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{float}
+\renewcommand{\refname}{Bibliografía}
+% ------------------------------------------------
+% Document
+% ------------------------------------------------
+\begin{document}
+
+% ------------------------------------------------
+% Title
+% ------------------------------------------------
+\title{Your Graph Theory Project Title}
+
+% ------------------------------------------------
+% Authors
+% ------------------------------------------------
+\author{
+    \IEEEauthorblockN{
+        Gabriel Salcedo,
+        First Author [Last Name],
+        Second Author [Last Name]
+    }
+    \IEEEauthorblockA{
+        Escuela de Economía y Negocios\\
+        Universidad del Rosario\\
+        Bogotá, Colombia\\
+        \{gabriel.salcedo, email2, email3\}@urosario.edu.co
+    }
+}
+
+\maketitle
+
+
+% ------------------------------------------------
+% I. Introducción
+% ------------------------------------------------
+\section{Introducción}
+Introduce el tema general de manera breve. Contextualiza la importancia de la teoría de grafos en esta área de estudio.
+
+Al final de esta sección, debes explicar brevemente cómo está organizado el resto del documento: ``El resto de este documento está organizado de la siguiente manera. La Sección II detalla la descripción del problema...''
+
+% ------------------------------------------------
+% II. Descripción del Problema
+% ------------------------------------------------
+\section{Descripción del Problema}
+Explica con detalle qué problema real o teórico estás abordando. ¿Qué está fallando o qué necesidad tecnológica/científica estás intentando resolver? Describe las limitaciones actuales del entorno.
+
+% ------------------------------------------------
+% III. Objetivos (General y Específicos)
+% ------------------------------------------------
+\section{Objetivo General y Objetivos Específicos}
+
+\subsection{Objetivo General}
+Escribe aquí el objetivo principal del proyecto. Debe ser un único enunciado claro que comience con un verbo en infinitivo (por ejemplo: \textit{Diseñar}, \textit{Optimizar}, \textit{Analizar}).
+
+\subsection{Objetivos Específicos}
+Pasos técnicos y secuenciales necesarios para alcanzar el objetivo general:
+\begin{itemize}
+    \item Primer paso técnico (ej. Recopilar los datos de la red).
+    \item Segundo paso técnico (ej. Modelar la red mediante teoría de grafos).
+    \item Tercer paso técnico (ej. Evaluar el rendimiento del algoritmo implementado).
+\end{itemize}
+
+% ------------------------------------------------
+% IV. Marco Teórico
+% ------------------------------------------------
+\section{Marco Teórico}
+Introduce los conceptos fundamentales de la teoría de grafos requeridos para entender tu proyecto.
+
+\subsection{Conceptos Fundamentales}
+Define matemáticamente los componentes del modelo. Por ejemplo, un grafo se puede representar formalmente como:
+\begin{equation}
+G = (V,E)
+\end{equation}
+donde $V$ representa el conjunto de vértices y $E$ representa el conjunto de aristas.
+
+\subsection{Algoritmos o Métodos Utilizados}
+Explica conceptualmente los teoremas o algoritmos específicos que aplicarás más adelante (ej. Algoritmo de Dijkstra, componentes conectadas, centralidad, etc.).
+
+% ------------------------------------------------
+% V. Modelamiento del Problema
+% ------------------------------------------------
+\section{Modelamiento del Problema}
+Explica detalladamente cómo traduces el problema real de la Sección II a un modelo matemático de grafos basado en la Sección IV.
+
+Abstrae los elementos del problema real de la siguiente forma:
+\begin{itemize}
+    \item \textbf{Vértices ($V$):} Representan [definición, ej. routers, ciudades, usuarios].
+    \item \textbf{Aristas ($E$):} Representan [definición, ej. cables de fibra, carreteras, relaciones de amistad].
+    \text{\textbf{Pesos de las aristas:}} Representan [definición opcional, ej. latencia, distancia en km].
+\end{itemize}
+
+% ------------------------------------------------
+% VI. Solución Propuesta
+% ------------------------------------------------
+\section{Solución Propuesta}
+Describe aquí la estrategia teórica, lógica o algorítmica elegida para resolver el problema ya modelado. Explica la arquitectura de tu propuesta, pseudocódigo o las reglas del sistema que vas a diseñar.
+
+% ------------------------------------------------
+% VII. Implementación de la Solución
+% ------------------------------------------------
+\section{Implementación de la Solución}
+Detalla el desarrollo práctico real de tu propuesta. Explica las herramientas de software empleadas (ej. Python con NetworkX, MATLAB, C++), cómo procesaste los datos, librerías críticas o detalles de hardware si los hubiera.
+
+% ------------------------------------------------
+% VIII. Resultados Obtenidos
+% ------------------------------------------------
+\section{Resultados Obtenidos}
+Presenta de forma cuantitativa y cualitativa los hallazgos de tus experimentos, simulaciones o ejecuciones de código.
+
+% Ejemplo de Figura (Las leyendas van ABAJO en formato IEEE)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{graph.png} % Asegúrate de tener esta imagen en Overleaf o comenta esta línea
+    \caption{Representación en grafo del modelo propuesto.}
+    \label{fig:graph}
+\end{figure}
+
+Como se observa en la Fig.~\ref{fig:graph}, la topología de la red muestra las propiedades clave analizadas.
+
+% Ejemplo de Tabla (Las leyendas van ARRIBA en formato IEEE con números romanos)
+\begin{table}[H]
+    \centering
+    \caption{Propiedades del Grafo de la Red}
+    \label{tab:properties}
+    \begin{tabular}{lc}
+        \toprule
+        Propiedad & Valor \\
+        \midrule
+        Número de vértices & 10 \\
+        Número de aristas & 15 \\
+        Grado promedio & 3.0 \\
+        Diámetro de la red & 4 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+En la Tabla~\ref{tab:properties} se resumen las métricas estructurales obtenidas tras la ejecución del algoritmo sobre la solución implementada.
+
+% ------------------------------------------------
+% IX. Conclusiones
+% ------------------------------------------------
+\section{Conclusiones}
+Resume los logros principales del proyecto basándote en los resultados. Explica directamente cómo el uso de la teoría de grafos permitió solucionar el problema y menciona ideas puntuales para trabajos futuros o mejoras del sistema \cite{reference1}.
+
+% ------------------------------------------------
+% Bibliografía
+% ------------------------------------------------
+\bibliographystyle{IEEEtran}
+\bibliography{references} % Recuerda tener un archivo llamado 'references.bib' en tu proyecto
+
+\end{document}
