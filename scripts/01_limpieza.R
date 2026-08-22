@@ -5,12 +5,131 @@ here()
 library(dplyr)
 library(ggplot2)
 library(readr)
+library(readxl)
 library(stringr)
 
 # =============================================================
 # 1. Cargar datos
 # =============================================================
-dataset_graphs <- read_csv(here("data","raw","comercio_puertos.csv"))
+dataset_graphs <- read_excel(here("data","raw","dataset_graphs.xlsx"))
+p_1 <- read_excel(here("data","raw","puertos_1.xlsx"))
+p_2 <- read_excel(here("data","raw","puertos_2.xlsx"))
+
+complete_ports <- bind_rows(p_1,p_2)%>%
+  distinct()
+
+complete_ports <- complete_ports%>%
+  select(-Arrival_Time,
+         -Departure_Time,
+         -Maps_Der,
+         -Eta_For_Next_Destination_Change,
+         -Vessel_Name,
+         -Vessel_Imo)
+
+puertos <- complete_ports%>%
+  rename(exp_imp = Berth_Type,
+         puerto_partida = Berth_Name,
+         puerto_llegada = Vessel_Destination_On_Departure,
+         pais_partida = Port_Country,
+         tipo_embarcacion = Vessel_Class,
+         capacidad_embarcacion = Vessel_Capacity,
+         cantidad_est = Estimated_Quantity)
+
+#eliminar 18 filas con exp_imp == imports/exports, no es claro la dirección
+
+puertos <- puertos %>%
+  filter(exp_imp != 'Imports/Exports')
+
+#filtrar por exp_imp para saber q paises importan y cuales exportan
+#esto se hace para construir la base de datos de la WITS (aranceles)
+
+imp <- puertos %>%
+  filter(exp_imp=='Imports')%>%
+  select(pais_partida) %>%
+  distinct()
+
+exp <- puertos %>%
+  filter(exp_imp=='Exports')%>%
+  distinct(pais_partida)%>%
+  pull(pais_partida)
+
+#descargamos datos arancelarios
+tariffs <- read.csv(here("data", "raw","tariffs.csv"))
+tariffs <- tariffs%>%
+  select(-Reporter,
+         -Product,
+         -Partner)
+paises_lista <- split(complete_ports, complete_ports$pais)
+
+# Revisar uno a la vez, cambiando el nombre:
+View(paises_lista[["Algeria"]])
+View(paises_lista[["India"]])
+View(paises_lista[["United States of America"]])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # =============================================================
 # 2. Resolver destinos con formato de ruta desviada (ej. "US CRP>US PAU")
 #    El destino real es lo que está DESPUÉS de la última flecha ">"
@@ -115,36 +234,36 @@ dataset_graphs <- dataset_graphs %>%
 # =============================================================
 # 8. Selección de puertos por volumen (Pareto al 50%)
 # =============================================================
-ports <- dataset_graphs %>%
-  group_by(Berth_Name_clean) %>%
-  summarise(
-    n_viajes = n(),
-    vol_total = sum(Estimated_Quantity, na.rm = TRUE)
-  ) %>%
-  arrange(desc(vol_total))
-
-# Distribución de volúmenes (visual)
-ggplot(ports, aes(x = vol_total)) +
-  geom_histogram(binwidth = 100000, fill = "steelblue", color = "black") +
-  labs(title = "Distribution of Port Volumes", x = "Volume", y = "Frequency") +
-  theme_minimal()
-
-# Pareto
-ports <- ports %>%
-  mutate(
-    pct_vol = vol_total / sum(vol_total),
-    pct_acum = cumsum(pct_vol)
-  )
-
-n_top <- sum(ports$pct_acum <= 0.50)
-n_top
-
-top_ports <- ports %>%
-  arrange(desc(vol_total)) %>%
-  slice_head(n = n_top)
-
-# =============================================================
-# 9. Dataset final: solo viajes entre los puertos top (por volumen)
-# =============================================================
-df_gr <- inner_join(dataset_graphs, top_ports, by = "Berth_Name_clean")
-write.csv(df_gr, "df_grafo.csv", row.names = FALSE)
+# ports <- dataset_graphs %>%
+#   group_by(Berth_Name_clean) %>%
+#   summarise(
+#     n_viajes = n(),
+#     vol_total = sum(Estimated_Quantity, na.rm = TRUE)
+#   ) %>%
+#   arrange(desc(vol_total))
+# 
+# # Distribución de volúmenes (visual)
+# ggplot(ports, aes(x = vol_total)) +
+#   geom_histogram(binwidth = 100000, fill = "steelblue", color = "black") +
+#   labs(title = "Distribution of Port Volumes", x = "Volume", y = "Frequency") +
+#   theme_minimal()
+# 
+# # Pareto
+# ports <- ports %>%
+#   mutate(
+#     pct_vol = vol_total / sum(vol_total),
+#     pct_acum = cumsum(pct_vol)
+#   )
+# 
+# n_top <- sum(ports$pct_acum <= 0.50)
+# n_top
+# 
+# top_ports <- ports %>%
+#   arrange(desc(vol_total)) %>%
+#   slice_head(n = n_top)
+# 
+# # =============================================================
+# # 9. Dataset final: solo viajes entre los puertos top (por volumen)
+# # =============================================================
+# df_gr <- inner_join(dataset_graphs, top_ports, by = "Berth_Name_clean")
+#write.csv(df_gr, here("data","final","df_grafo.csv"), row.names = FALSE)
